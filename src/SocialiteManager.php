@@ -1,7 +1,9 @@
 <?php
 namespace Yjtec\Socialite;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
+use Illuminate\Support\Str;
 use \InvalidArgumentException;
 use Yjtec\Socialite\Two\GithubProvider;
 class SocialiteManager extends Manager implements Contracts\Factory
@@ -17,7 +19,7 @@ class SocialiteManager extends Manager implements Contracts\Factory
     }
 
     public function createGithubDriver(){
-        $config = $this->app['config']['services.gitlab'];
+        $config = $this->app['config']['services.github'];
         return $this->buildProvider(
             GithubProvider::class,$config
         );
