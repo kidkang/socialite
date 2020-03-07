@@ -6,6 +6,7 @@ use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use \InvalidArgumentException;
 use Yjtec\Socialite\Two\GithubProvider;
+use Yjtec\Socialite\Two\WechatProvider;
 class SocialiteManager extends Manager implements Contracts\Factory
 {
     /**
@@ -22,6 +23,13 @@ class SocialiteManager extends Manager implements Contracts\Factory
         $config = $this->app['config']['services.github'];
         return $this->buildProvider(
             GithubProvider::class,$config
+        );
+    }
+
+    public function createWechatDriver(){
+        $config = $this->app['config']['services.wechat'];
+        return $this->buildProvider(
+            WechatProvider::class,$config
         );
     }
 
