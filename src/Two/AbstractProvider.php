@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Http\RedirectResponse;
 use Yjtec\Socialite\Contracts\Provider as ProviderContract;
-
+use Yjtec\Socialite\Exceptions\InvalidStateException;
 abstract class AbstractProvider implements ProviderContract
 {
     /**
@@ -211,7 +211,7 @@ abstract class AbstractProvider implements ProviderContract
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
-        dd($response);
+        
         $user = $this->mapUserToObject($this->getUserByToken(
             $token = Arr::get($response, 'access_token')
         ));

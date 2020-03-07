@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use \InvalidArgumentException;
 use Yjtec\Socialite\Two\GithubProvider;
 use Yjtec\Socialite\Two\WechatProvider;
+use Yjtec\Socialite\Two\WechatAppProvider;
 class SocialiteManager extends Manager implements Contracts\Factory
 {
     /**
@@ -32,6 +33,14 @@ class SocialiteManager extends Manager implements Contracts\Factory
             WechatProvider::class,$config
         );
     }
+
+    public function createWechatAppDriver(){
+        $config = $this->app['config']['services.wechat_app'];
+        return $this->buildProvider(
+            WechatAppProvider::class,$config
+        );
+    }
+
 
     /**
      * Build an OAuth 2 provider instance.
