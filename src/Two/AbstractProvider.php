@@ -151,7 +151,6 @@ abstract class AbstractProvider implements ProviderContract
         if ($this->usesState()) {
             $this->request->session()->put('state', $state = $this->getState());
         }
-
         return new RedirectResponse($this->getAuthUrl($state));
     }
 
@@ -211,7 +210,6 @@ abstract class AbstractProvider implements ProviderContract
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
-        
         $user = $this->mapUserToObject($this->getUserByToken(
             $token = Arr::get($response, 'access_token')
         ));
@@ -264,7 +262,6 @@ abstract class AbstractProvider implements ProviderContract
             'headers' => ['Accept' => 'application/json'],
             $postKey => $this->getTokenFields($code),
         ]);
-
         return json_decode($response->getBody(), true);
     }
 

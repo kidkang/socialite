@@ -8,6 +8,7 @@ use \InvalidArgumentException;
 use Yjtec\Socialite\Two\GithubProvider;
 use Yjtec\Socialite\Two\WechatProvider;
 use Yjtec\Socialite\Two\WechatAppProvider;
+use Yjtec\Socialite\Two\GitlabProvider;
 class SocialiteManager extends Manager implements Contracts\Factory
 {
     /**
@@ -31,6 +32,13 @@ class SocialiteManager extends Manager implements Contracts\Factory
         $config = $this->app['config']['services.wechat'];
         return $this->buildProvider(
             WechatProvider::class,$config
+        );
+    }
+
+    public function createGitlabDriver(){
+        $config = $this->app['config']['services.gitlab'];
+        return $this->buildProvider(
+            GitlabProvider::class,$config
         );
     }
 

@@ -3,7 +3,7 @@
 namespace Yjtec\Socialite\Two;
 
 use Illuminate\Support\Arr;
-
+use Yjtec\Socialite\Exceptions\InvalidStateException;
 class WechatProvider extends AbstractProvider implements ProviderInterface
 {
 
