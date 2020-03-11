@@ -257,11 +257,12 @@ abstract class AbstractProvider implements ProviderContract
     public function getAccessTokenResponse($code)
     {
         $postKey = (version_compare(ClientInterface::VERSION, '6') === 1) ? 'form_params' : 'body';
-
+        // dd($this->getTokenFields($code));
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
             'headers' => ['Accept' => 'application/json'],
             $postKey => $this->getTokenFields($code),
         ]);
+
         return json_decode($response->getBody(), true);
     }
 

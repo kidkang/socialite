@@ -9,6 +9,7 @@ use Yjtec\Socialite\Two\GithubProvider;
 use Yjtec\Socialite\Two\WechatProvider;
 use Yjtec\Socialite\Two\WechatAppProvider;
 use Yjtec\Socialite\Two\GitlabProvider;
+use Yjtec\Socialite\Two\AppleProvider;
 class SocialiteManager extends Manager implements Contracts\Factory
 {
     /**
@@ -49,6 +50,12 @@ class SocialiteManager extends Manager implements Contracts\Factory
         );
     }
 
+    public function createAppleDriver(){
+        $config = $this->app['config']['services.apple'];
+        return $this->buildProvider(
+            AppleProvider::class,$config
+        );
+    }
 
     /**
      * Build an OAuth 2 provider instance.
