@@ -10,7 +10,7 @@ class AppleProvider extends AbstractProvider implements ProviderInterface
     public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [])
     {
         $secret = AppleSignin::secret();
-
+        
         parent::__construct($request,$clientId,$secret,$redirectUrl,$guzzle);
     }
     protected function getAuthUrl($state)

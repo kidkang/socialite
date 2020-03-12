@@ -12,12 +12,11 @@ class WechatProvider extends AbstractProvider implements ProviderInterface
      */
     public function user()
     {
-        if ($this->hasInvalidState()) {
-            throw new InvalidStateException;
-        }
+        // if ($this->hasInvalidState()) {
+        //     throw new InvalidStateException;
+        // }
 
         $response = $this->getAccessTokenResponse($this->getCode());
-
         $user = $this->mapUserToObject($this->getUser(
             $token = Arr::get($response, 'access_token'),
             $openid = Arr::get($response, 'openid')
@@ -57,7 +56,7 @@ class WechatProvider extends AbstractProvider implements ProviderInterface
     public function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-            'id'       => $user['openid'],
+            'id'       => isset($user['unionid']) ? $user['unionid'] : $user['openid'],
             'nickname' => $user['nickname'],
             'avatar'   => $user['headimgurl'],
         ]);
