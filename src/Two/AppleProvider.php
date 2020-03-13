@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 class AppleProvider extends AbstractProvider implements ProviderInterface
 {
-    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [])
+
+    protected $appleSignin;
+
+
+    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [],$instance)
     {
-        $secret = AppleSignin::secret();
         
+        $this->appleSignin = AppleSignin::getInstance($instance);
+        $secret = $this->appleSignin->secret();
         parent::__construct($request,$clientId,$secret,$redirectUrl,$guzzle);
     }
     protected function getAuthUrl($state)
@@ -20,7 +25,6 @@ class AppleProvider extends AbstractProvider implements ProviderInterface
 
     protected function getTokenUrl()
     {
-
         return 'https://appleid.apple.com/auth/token';
     }
 
@@ -29,7 +33,7 @@ class AppleProvider extends AbstractProvider implements ProviderInterface
         $response = $this->getAccessTokenResponse($this->getCode());
         $jwt = Arr::get($response,'id_token');
         $user = $this->mapUserToObject(
-            (array) AppleSignin::decode($jwt)
+            (array) $this->appleSignin->decode($jwt)
         );
         return $user->setToken(Arr::get($response, 'access_token'))
                     ->setRefreshToken(Arr::get($response, 'refresh_token'))

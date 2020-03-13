@@ -6,9 +6,9 @@ use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use \InvalidArgumentException;
 use Yjtec\Socialite\Two\GithubProvider;
-use Yjtec\Socialite\Two\WechatProvider;
-use Yjtec\Socialite\Two\WechatAppProvider;
 use Yjtec\Socialite\Two\GitlabProvider;
+use Yjtec\Socialite\Three\ThreeProvider;
+use Yjtec\Socialite\Two\WechatProvider;
 use Yjtec\Socialite\Two\AppleProvider;
 class SocialiteManager extends Manager implements Contracts\Factory
 {
@@ -29,12 +29,7 @@ class SocialiteManager extends Manager implements Contracts\Factory
         );
     }
 
-    public function createWechatDriver(){
-        $config = $this->app['config']['services.wechat'];
-        return $this->buildProvider(
-            WechatProvider::class,$config
-        );
-    }
+    
 
     public function createGitlabDriver(){
         $config = $this->app['config']['services.gitlab'];
@@ -43,20 +38,28 @@ class SocialiteManager extends Manager implements Contracts\Factory
         );
     }
 
-    public function createWechatAppDriver(){
-        $config = $this->app['config']['services.wechat_app'];
-        return $this->buildProvider(
-            WechatAppProvider::class,$config
+    public function createWechatDriver(){
+        $config = $this->app['config']['services.wechat'];
+        return $this->buildThreeProvider(
+            WechatProvider::class,
+            $config
         );
     }
 
     public function createAppleDriver(){
         $config = $this->app['config']['services.apple'];
-        return $this->buildProvider(
+        return $this->buildThreeProvider(
             AppleProvider::class,$config
         );
     }
 
+    public function buildThreeProvider($provider,$config){
+        return new ThreeProvider(
+            $this->app['request'],
+            $config,
+            $provider
+        );
+    }
     /**
      * Build an OAuth 2 provider instance.
      *
