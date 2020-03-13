@@ -13,7 +13,7 @@
     "illuminate/contracts": "~5.4",
     "illuminate/http": "~5.4",
     "illuminate/support": "~5.4",
-    "yjtec/applesignin":"^1.0"
+    "yjtec/apple-signin":"^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "7.5",

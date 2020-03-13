@@ -17,7 +17,6 @@ class WechatProvider extends AbstractProvider implements ProviderInterface
         // }
 
         $response = $this->getAccessTokenResponse($this->getCode());
-        dd($response);
         $user = $this->mapUserToObject($this->getUser(
             $token = Arr::get($response, 'access_token'),
             $openid = Arr::get($response, 'openid')
