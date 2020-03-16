@@ -4,6 +4,7 @@ namespace Yjtec\Socialite\Two;
 
 use Illuminate\Support\Arr;
 use Yjtec\Socialite\Exceptions\InvalidStateException;
+use Yjtec\Socialite\Events\SocialiteLogUser;
 class WechatProvider extends AbstractProvider implements ProviderInterface
 {
 
@@ -21,7 +22,7 @@ class WechatProvider extends AbstractProvider implements ProviderInterface
             $token = Arr::get($response, 'access_token'),
             $openid = Arr::get($response, 'openid')
         ));
-
+        event(new SocialiteLogUser($user,'wechat',$this->clientId));
         return $user->setToken($token)
             ->setRefreshToken(Arr::get($response, 'refresh_token'))
             ->setExpiresIn(Arr::get($response, 'expires_in'));

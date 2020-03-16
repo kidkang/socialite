@@ -2,21 +2,22 @@
 
 namespace Yjtec\Socialite\Two;
 
-use Yjtec\AppleSignin\Facades\AppleSignin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Yjtec\AppleSignin\Facades\AppleSignin;
+use Yjtec\Socialite\Events\SocialiteLogUser;
+
 class AppleProvider extends AbstractProvider implements ProviderInterface
 {
 
     protected $appleSignin;
 
-
-    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [],$instance)
+    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [], $instance)
     {
-        
+
         $this->appleSignin = AppleSignin::getInstance($instance);
-        $secret = $this->appleSignin->secret();
-        parent::__construct($request,$clientId,$secret,$redirectUrl,$guzzle);
+        $secret            = $this->appleSignin->secret();
+        parent::__construct($request, $clientId, $secret, $redirectUrl, $guzzle);
     }
     protected function getAuthUrl($state)
     {
@@ -31,13 +32,15 @@ class AppleProvider extends AbstractProvider implements ProviderInterface
     public function user()
     {
         $response = $this->getAccessTokenResponse($this->getCode());
-        $jwt = Arr::get($response,'id_token');
-        $user = $this->mapUserToObject(
+        $jwt      = Arr::get($response, 'id_token');
+        $user     = $this->mapUserToObject(
             (array) $this->appleSignin->decode($jwt)
         );
+        event(new SocialiteLogUser($user, 'apple', $this->clientId));
+
         return $user->setToken(Arr::get($response, 'access_token'))
-                    ->setRefreshToken(Arr::get($response, 'refresh_token'))
-                    ->setExpiresIn(Arr::get($response, 'expires_in'));
+            ->setRefreshToken(Arr::get($response, 'refresh_token'))
+            ->setExpiresIn(Arr::get($response, 'expires_in'));
     }
 
     protected function getUserByToken($token)
@@ -47,7 +50,7 @@ class AppleProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-            'id' => $user['sub']
+            'id' => $user['sub'],
         ]);
     }
 
