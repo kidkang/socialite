@@ -16,7 +16,7 @@ class CreateSocialiteAppleTable extends Migration
         Schema::create('socialite_apple', function (Blueprint $table) {
             $table->increments('id');
             $table->string('client_id','255')->comment('app_id');
-            $table->string('sub',255)->comment('苹果唯一标示符');
+            $table->string('sub',255)->unique()->comment('苹果唯一标示符');
             $table->timestamps();
         });
     }
