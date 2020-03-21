@@ -22,8 +22,7 @@
   "autoload": {
     "psr-4": {
       "Yjtec\\Socialite\\": "src/"
-    },
-    "classmap": ["database/seeds", "database/factories"]
+    }
   },
   "autoload-dev": {
     "psr-4": {
