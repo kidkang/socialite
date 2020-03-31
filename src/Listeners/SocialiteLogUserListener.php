@@ -21,15 +21,12 @@ class SocialiteLogUserListener{
     public function handle(SocialiteLogUser $event){
 
         $class = 'Yjtec\\Socialite\\Models\\'.ucfirst($event->driver);
-
         $clientId = $event->clientId;
-        $formatUser = (new $class($event->user))->toArray();
-        if(!(new $class)->where($formatUser)->get()->isNotEmpty()){
+        if(!(new $class)->uniqUser($event->user)){
             $user = (new $class)->create(array_merge(
                 $event->user,
                 ['client_id'=>$clientId]
             ));
-
             $social = (new Socialite)->create([
                 'socialitetable_id' => $user->id,
                 'socialitetable_type' => $class

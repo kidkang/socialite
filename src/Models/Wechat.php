@@ -1,13 +1,14 @@
 <?php
 
 namespace Yjtec\Socialite\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Wechat extends Model
+class Wechat extends AbstractModel
 {
     protected $table = 'socialite_wechat';
     protected $fillable = ['client_id','openid','unionid','nickname','sex','city','province','country','headimgurl'];
+
+    public function uniqUser(array $user){
+        return $this->where('openid',$user['openid'])->first();
+    }
     public function setNicknameAttribute($value){
         $this->attributes['nickname'] = userTextEncode($value);
     }
