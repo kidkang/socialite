@@ -10,6 +10,7 @@ use Yjtec\Socialite\Two\GitlabProvider;
 use Yjtec\Socialite\Three\ThreeProvider;
 use Yjtec\Socialite\Two\WechatProvider;
 use Yjtec\Socialite\Two\AppleProvider;
+use Yjtec\Socialite\Two\DingProvider;
 class SocialiteManager extends Manager implements Contracts\Factory
 {
     /**
@@ -22,14 +23,18 @@ class SocialiteManager extends Manager implements Contracts\Factory
         return $this->driver($driver);
     }
 
+    public function createDingDriver(){
+        $config = $this->app['config']['services.ding'];
+        return $this->buildProvider(
+            DingProvider::class,$config
+        );
+    }
     public function createGithubDriver(){
         $config = $this->app['config']['services.github'];
         return $this->buildProvider(
             GithubProvider::class,$config
         );
     }
-
-    
 
     public function createGitlabDriver(){
         $config = $this->app['config']['services.gitlab'];
