@@ -27,7 +27,7 @@
   },
   "extra": {
     "laravel": {
-      "providers": ["Yjtec\\Socialite\\SocialiteServiceProvider"],
+      "providers": ["Yjtec\\Socialite\\SocialiteServiceProvider"]
     }
   },
   "config": {
