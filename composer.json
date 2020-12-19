@@ -1,7 +1,7 @@
 {
   "name": "yjtec/socialite",
   "description": "socialite 登陆",
-  "minimum-stability": "dev",
+  "minimum-stability": "dev-master",
   "authors": [{
     "name": "kidkang",
     "email": "723616880@qq.com"
@@ -25,7 +25,11 @@
       "Yjtec\\Socialite\\Tests\\": "tests/"
     }
   },
-  "extra": {},
+  "extra": {
+    "laravel": {
+      "providers": ["Yjtec\\Socialite\\SocialiteServiceProvider"],
+    }
+  },
   "config": {
     "sort-packages": true
   }

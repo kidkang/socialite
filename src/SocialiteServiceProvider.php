@@ -1,0 +1,26 @@
+<?php
+
+namespace Yjtec\Socialite;
+
+use Illuminate\Support\ServiceProvider;
+use Laravel\Socialite\Contracts\Factory;
+
+class SocialiteServiceProvider extends ServiceProvider
+{
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        dd(123);
+    }
+}
