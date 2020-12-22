@@ -2,9 +2,7 @@
 
 社会化登陆包
 
-## 使用方法
-
-### 配置
+## 配置
 
 config/services.php添加如下配置
 
@@ -26,44 +24,26 @@ config/services.php添加如下配置
     ]
 ```
 
-### 使用
+## 使用
 
-#### 微信公众平台登录
+### 钉钉登录
+> web下默认跳转到钉钉扫码登录，如果是在钉钉应用内，直接默认授权登录
 
 ```
-Route::get('wechat',function(){
-    return Socialite::driver('wechat')->redirect();
+Route::get('dingtalk',function(){
+    return Socialite::driver('dingtalk')->redirect();
 });
 
-Route::get('wechat/callback',function(){
-    $user = Socialite::driver('wechat')->user();
-
+Route::get('dingtalk/callback',function(){
+    $user = Socialite::driver('dingtalk')->user();
     dd($user);
 });
 ```
 
-#### 微信app登陆
-
+#### 钉钉账号密码登录
 ```
-$user = Socialite::driver('wechat_app')->user();
-    dd($user);
-```
-
-#### github授权登陆
-
-```
-Route::get('soc',function(){
-    return Socialite::driver('github')->redirect();
-});
-
-Route::get('callback',function(){
-    $user = Socialite::driver('github')->user();
-    dd($user);
+Route::get('dingtalk',function(){
+    return Socialite::driver('dingtalk')->scopes('pwd')->redirect();
 });
 ```
-
-#### github授权token登陆
-
-`$user = Socialite::driver('github')->userFromToken('2e3d36b286fc051b7641c53c0f50d1bc74ea35a4');`
-
 
