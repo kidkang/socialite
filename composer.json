@@ -1,7 +1,7 @@
 {
   "name": "yjtec/socialite",
   "description": "socialite 登陆",
-  "minimum-stability": "dev-master",
+  "minimum-stability": "dev",
   "authors": [{
     "name": "kidkang",
     "email": "723616880@qq.com"
@@ -9,7 +9,7 @@
   "require": {
     "php": "^7.1",
     "ext-json": "*",
-    "laravel/socialite": "~3.4.0"
+    "yjtec/laravel-request-agent":"^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~6.0",
@@ -25,11 +25,7 @@
       "Yjtec\\Socialite\\Tests\\": "tests/"
     }
   },
-  "extra": {
-    "laravel": {
-      "providers": ["Yjtec\\Socialite\\SocialiteServiceProvider"]
-    }
-  },
+  "extra": {},
   "config": {
     "sort-packages": true
   }
